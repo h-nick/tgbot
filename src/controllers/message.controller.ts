@@ -1,6 +1,7 @@
 import { Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { MessageService } from '../services/message.service';
 import { TypeOfMessage, Command } from '../data/message.data';
+import * as strings from '../messages/strings';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -30,7 +31,7 @@ export class MessageController {
           // No need for a default case. It will return in the end.
           switch (command) {
             case Command.TEST:
-              await this.messageService.sendMessageToGroup('Test message');
+              await this.messageService.sendMessageToGroup(strings.TEST_STRING());
               break;
           }
         }
