@@ -15,7 +15,6 @@ export class MessageController {
 
   @Post()
   async handleMessage(@Req() req, @Res() res): Promise<void> {
-
     try {
       const message = req.body.message;
 
@@ -39,8 +38,22 @@ export class MessageController {
     } catch (error) {
 
       console.log(error);
+      let errorMsg;
 
-      // TODO: Handle errors.
+      /*
+        On development builds, the actual exception will be sent as a message to the
+        bot group. Since these may contain sensitive information, this is disabled
+        for production builds.
+      */
+      if (process.env.NODE_ENV === 'development') {
+        errorMsg = strings.ERROR_STRING(error);
+      } else {
+        errorMsg = strings.ERROR_STRING();
+      }
+
+      console.log(errorMsg);
+
+      await this.messageService.sendMessageToGroup(errorMsg);
     }
 
     return res.status(200).send();
