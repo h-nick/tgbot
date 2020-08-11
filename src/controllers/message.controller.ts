@@ -27,6 +27,12 @@ export class MessageController {
         if (typeOfMessage === TypeOfMessage.COMMAND) {
           const command = this.messageService.getCommand(message.text);
 
+          // No need for a default case. It will return in the end.
+          switch (command) {
+            case Command.TEST:
+              await this.messageService.sendMessageToGroup('Test message');
+              break;
+          }
         }
       }
     } catch (error) {
