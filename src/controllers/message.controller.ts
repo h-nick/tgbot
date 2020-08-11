@@ -1,6 +1,6 @@
 import { Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { MessageService } from '../services/message.service';
-import { TypeOfMessage } from '../data/message.data';
+import { TypeOfMessage, Command } from '../data/message.data';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -22,10 +22,11 @@ export class MessageController {
       if (message.text) {
         const typeOfMessage = this.messageService.getTypeOfMessage(message.text);
 
+        // So far only commands will be handled. It can be easily escalated to handle
+        // normal messages too.
         if (typeOfMessage === TypeOfMessage.COMMAND) {
-          // TODO: Handle commands.
-        } else if (typeOfMessage === TypeOfMessage.NORMAL) {
-          // TODO: Handle normal messages.
+          const command = this.messageService.getCommand(message.text);
+
         }
       }
     } catch (error) {
