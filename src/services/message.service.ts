@@ -24,15 +24,17 @@ export class MessageService {
 
   getCommand(text: string): Command {
     // Extract the actual command from the bot.
+
+    // Regex captures the actual command (between "/" and "@<botname>")
     const regex = /\/(.+)@/;
-    const command = text.match(regex)[1];
+    const command = text.match(regex)[1].toUpperCase();
 
-    switch (command) {
-      case 'testbot':
-        return Command.TEST;
-
-      default: return;
-    }
+    /*
+      String is mapped to the Command Enum.
+      This way, if we add new commands, only the Enum needs to be changed
+      instead of a complex if/switch statement.
+    */
+    return Command[command as keyof typeof Command];
   }
 
   async sendMessage(targetChat: number, text: string, replyId?: number): Promise<any> {
