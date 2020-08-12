@@ -30,7 +30,7 @@ export class MessageController {
           // No need for a default case. It will return in the end.
           switch (command) {
             case Command.TEST:
-              await this.messageService.sendMessageToGroup(strings.TEST_STRING());
+              await this.messageService.sendMessage(message.chat.id, strings.TEST_STRING());
               break;
           }
         }
@@ -53,7 +53,7 @@ export class MessageController {
 
       console.log(errorMsg);
 
-      await this.messageService.sendMessageToGroup(errorMsg);
+      await this.messageService.sendMessage(Number(process.env.DEFAULT_GROUP_ID), errorMsg);
     }
 
     return res.status(200).send();

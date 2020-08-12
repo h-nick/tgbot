@@ -36,12 +36,12 @@ export class MessageService {
     }
   }
 
-  async sendMessageToGroup(text: string, replyId?: number): Promise<any> {
+  async sendMessage(targetChat: number, text: string, replyId?: number): Promise<any> {
 
     // Depending on whether we're answering to another message or not, the object
     // will change.
     const objRes: SendMessageObj = {
-      chat_id: Number(process.env.GROUP_ID),
+      chat_id: targetChat,
       text,
       parse_mode: 'HTML',
     };
