@@ -13,7 +13,6 @@ export class MessageService {
   ) { }
 
   getTypeOfMessage(text: string): TypeOfMessage {
-
     // All Telegram commands start with "/", therefore we'll use this to determine
     // if we're dealing with a command or a normal text message.
     if (text.startsWith('/')) {
@@ -37,7 +36,6 @@ export class MessageService {
   }
 
   async sendMessage(targetChat: number, text: string, replyId?: number): Promise<any> {
-
     // Depending on whether we're answering to another message or not, the object
     // will change.
     const objRes: SendMessageObj = {
@@ -51,5 +49,19 @@ export class MessageService {
     }
 
     return await this.httpService.post('/sendMessage', objRes).toPromise();
+  }
+
+  async pinMessage(
+    targetChat: number,
+    targetMessage: number,
+    notify: boolean = false,
+  ): Promise<any> {
+    const objRes = {
+      chat_id: targetChat,
+      message_id: targetMessage,
+      disable_notification: !notify,
+    };
+
+    return await this.httpService.post('/pinChatMessage', objRes).toPromise();
   }
 }
