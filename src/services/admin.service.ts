@@ -16,6 +16,7 @@ export class AdminService {
     const objRes = {
       chat_id: targetChat,
       user_id: targetUser,
+      until_date: Math.round(new Date(Date.now() + (60000)).getTime() / 1000),
     };
 
     return await this.httpService.post('/kickChatMember', objRes).toPromise();

@@ -5,6 +5,10 @@ export enum TypeOfMessage {
 
 export enum Command {
   TEST,
+  CENSOR,
+  SUPERCENSOR,
+  MEGACENSOR,
+  KICK,
 }
 
 export interface SendMessageObj {

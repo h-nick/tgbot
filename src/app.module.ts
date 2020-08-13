@@ -3,6 +3,7 @@ import { AppController } from './controllers/app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MessageService } from './services/message.service';
 import { MessageController } from './controllers/message.controller';
+import { AdminService } from './services/admin.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { MessageController } from './controllers/message.controller';
     }),
   ],
   controllers: [AppController, MessageController],
-  providers: [MessageService],
+  providers: [MessageService, AdminService],
 })
 export class AppModule { }
