@@ -21,24 +21,12 @@ export class MessageController {
     await this.messageService.sendMessage(this.message.chat.id, strings.TEST_STRING());
   }
 
-  async handleCensorCommand(command: Command): Promise<void> {
-    let duration;
-    const uName = this.message.from.username || this.message.from.first_name;
-
-    // TODO: Dynamic times
-    if (command === Command.CENSOR) {
-      duration = 30;
-    } else if (command === Command.SUPERCENSOR) {
-      duration = 60;
-    } else {
-      duration = 300;
-    }
-
+  async handleCensorCommand(duration: number = 35): Promise<void> {
     // Censor command only works when replyig to a message.
     if (!this.message.reply_to_message) {
       this.messageService.sendMessage(
         this.message.chat.id,
-        strings.ERROR_NO_REPLY_ID_ON_CENSOR(uName),
+        strings.ERROR_NO_REPLY_ID_ON_CENSOR(),
         this.message.message_id,
       );
 
@@ -51,6 +39,11 @@ export class MessageController {
       duration,
     );
 
+    const tName = (
+      this.message.reply_to_message.from.username
+      || this.message.reply_to_message.from.first_name
+    );
+
     // If censorUser() is successful, it will return true.
     if (!resStatus) {
       this.messageService.sendMessage(
@@ -61,7 +54,7 @@ export class MessageController {
     } else {
       this.messageService.sendMessage(
         this.message.chat.id,
-        strings.CENSOR_MESSAGE(uName, duration),
+        strings.CENSOR_MESSAGE(tName, duration),
         this.message.reply_to_message.message_id,
       );
     }
@@ -88,9 +81,12 @@ export class MessageController {
               break;
 
             case Command.CENSOR:
-            case Command.SUPERCENSOR:
-            case Command.MEGACENSOR:
-              this.handleCensorCommand(command);
+              this.handleCensorCommand();
+              break;
+
+            case Command.TIMECENSOR:
+              const duration = this.messageService.getCommandParams(this.message.text);
+              this.handleCensorCommand(duration[0]);
               break;
           }
         }

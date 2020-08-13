@@ -9,17 +9,16 @@ export const ERROR_STRING = (a?: string) => (
   `
 );
 
-export const ERROR_NO_REPLY_ID_ON_CENSOR = (uName: string) => (
+export const ERROR_NO_REPLY_ID_ON_CENSOR = () => (
   `
-    Sorry ${uName}.
-    You can only use a censor command when replying to a message.
+     You can only use the censor command when replying to a message.
   `
 );
 
 export const CENSOR_MESSAGE = (uName: string, duration: number) => (
   `
     ${uName} was censored for this post.
-    Duration: ${duration}
+    Duration: ${duration} seconds.
   `
 );
 

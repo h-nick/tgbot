@@ -31,8 +31,6 @@ export class MessageService {
       params = paramsTemp[1].split(' ');
     }
 
-    console.log(params.filter(Boolean));
-
     return params.filter(Boolean);
   }
 
