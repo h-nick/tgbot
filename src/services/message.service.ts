@@ -12,6 +12,14 @@ export class MessageService {
     private readonly httpService: HttpService,
   ) { }
 
+  getUsernameLink(fromData: any): string {
+    if (fromData.username) {
+      return `@${fromData.username}`;
+    } else {
+      return `<a href='tg://user?id=${fromData.id}'>${fromData.first_name}</a>`;
+    }
+  }
+
   getTypeOfMessage(text: string): TypeOfMessage {
     // All Telegram commands start with "/", therefore we'll use this to determine
     // if we're dealing with a command or a normal text message.

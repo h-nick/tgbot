@@ -39,10 +39,7 @@ export class MessageController {
       duration,
     );
 
-    const tName = (
-      this.message.reply_to_message.from.username
-      || this.message.reply_to_message.from.first_name
-    );
+    const tName = this.messageService.getUsernameLink(this.message.reply_to_message.from);
 
     // If censorUser() is successful, it will return true.
     if (!resStatus) {
@@ -106,8 +103,6 @@ export class MessageController {
       } else {
         errorMsg = strings.ERROR_STRING();
       }
-
-      console.log(errorMsg);
 
       await this.messageService.sendMessage(
         Number(process.env.DEFAULT_GROUP_ID),
