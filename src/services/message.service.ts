@@ -22,6 +22,20 @@ export class MessageService {
     }
   }
 
+  getCommandParams(text: string): any[] {
+    const regex = /\s(.*)/;
+    const paramsTemp = text.match(regex);
+    let params = [];
+
+    if (paramsTemp) {
+      params = paramsTemp[1].split(' ');
+    }
+
+    console.log(params.filter(Boolean));
+
+    return params.filter(Boolean);
+  }
+
   getCommand(text: string): Command {
     // Extract the actual command from the bot.
 
