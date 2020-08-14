@@ -22,7 +22,7 @@ export class MessageController {
   }
 
   async handleCensorCommand(duration: number = 35): Promise<void> {
-    // Censor command only works when replyig to a message.
+    // Censor command only works when replying to a message.
     if (!this.message.reply_to_message) {
       this.messageService.sendMessage(
         this.message.chat.id,
@@ -78,10 +78,6 @@ export class MessageController {
               break;
 
             case Command.CENSOR:
-              this.handleCensorCommand();
-              break;
-
-            case Command.TIMECENSOR:
               const duration = this.messageService.getCommandParams(this.message.text);
               this.handleCensorCommand(duration[0]);
               break;

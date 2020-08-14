@@ -6,7 +6,6 @@ export enum TypeOfMessage {
 export enum Command {
   TEST,
   CENSOR,
-  TIMECENSOR,
   KICK,
 }
 
