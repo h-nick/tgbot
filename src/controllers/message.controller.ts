@@ -74,7 +74,7 @@ export class MessageController {
           // No need for a default case. It will return in the end.
           switch (command) {
             case Command.TEST:
-              this.handleTestCommand();
+              await this.handleTestCommand();
               break;
 
             case Command.CENSOR:
