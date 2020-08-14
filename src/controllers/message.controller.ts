@@ -42,14 +42,14 @@ export class MessageController {
     const tName = this.messageService.getUsernameLink(this.message.reply_to_message.from);
 
     // If censorUser() is successful, it will return true.
-    if (!resStatus) {
-      this.messageService.sendMessage(
+    if (!resStatus.data.ok) {
+      await this.messageService.sendMessage(
         this.message.chat.id,
         strings.CENSOR_ERROR(),
-        this.message.from.id,
+        this.message.id,
       );
     } else {
-      this.messageService.sendMessage(
+      await this.messageService.sendMessage(
         this.message.chat.id,
         strings.CENSOR_MESSAGE(tName, duration),
         this.message.reply_to_message.message_id,
@@ -79,7 +79,7 @@ export class MessageController {
 
             case Command.CENSOR:
               const duration = this.messageService.getCommandParams(this.message.text);
-              this.handleCensorCommand(duration[0]);
+              await this.handleCensorCommand(duration[0]);
               break;
           }
         }
