@@ -55,6 +55,11 @@ export class MessageService {
       instead of a complex if/switch statement.
     */
     return Command[command as keyof typeof Command];
+
+    /*
+      For more reference about "as keyof typeof", check
+      https://stackoverflow.com/questions/55377365/what-does-keyof-typeof-mean-in-typescript
+    */
   }
 
   async sendMessage(targetChat: number, text: string, replyId?: number): Promise<any> {

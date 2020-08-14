@@ -33,6 +33,16 @@ export class MessageController {
       return;
     }
 
+    // Ensure duration is a number higher than 35 seconds.
+    if (isNaN(duration) || duration < 35) {
+      duration = 35;
+    }
+
+    // Ensure duration is not higher than the max vaue.
+    if (duration > Number(process.env.CENSOR_DURATION_MAX_VALUE)) {
+      duration = Number(process.env.CENSOR_DURATION_MAX_VALUE);
+    }
+
     const resStatus = await this.adminService.censorUser(
       this.message.chat.id,
       this.message.reply_to_message.from.id,
