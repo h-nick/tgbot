@@ -10,6 +10,7 @@ import { AdminService } from './services/admin.service';
     ConfigModule.forRoot(),
     HttpModule.register({
       baseURL: `https://api.telegram.org/${process.env.TG_API_KEY}`,
+      timeout: 15000,
     }),
   ],
   controllers: [AppController, MessageController],
