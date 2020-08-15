@@ -7,6 +7,7 @@ export enum Command {
   TEST,
   CENSOR,
   KICK,
+  YOUTUBE_THIS,
 }
 
 export interface SendMessageObj {

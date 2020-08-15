@@ -28,3 +28,20 @@ export const CENSOR_ERROR = () => (
     Maybe the user is a channel administrator.
   `
 );
+
+export const YT_NO_QUERY = () => (
+  `
+    You must use this command responding to another text message \
+    or by following it with a search query.
+  `
+);
+
+export const YT_NOT_FOUND = (searchParam: string) => (
+  'Too bad! I could not find any YouTube video with this query: \n'
+  + `<b>"${searchParam}"</b>`
+);
+
+export const YT_FOUND = (link: string) => (
+  'I found the following video: \n'
+  + `<b>${link}</b>`
+);

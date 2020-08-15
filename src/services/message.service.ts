@@ -42,6 +42,23 @@ export class MessageService {
     return params.filter(Boolean);
   }
 
+  getCommandFullParam(text: string): string {
+    const regex = /\s(.*)/;
+    const paramTemp = text.match(regex);
+
+    if (!paramTemp) {
+      return null;
+    }
+
+    const param = paramTemp[1].trim();
+
+    if (Boolean(param)) {
+      return param;
+    } else {
+      return null;
+    }
+  }
+
   getCommand(text: string): Command {
     // Extract the actual command from the bot.
 

@@ -3,6 +3,7 @@ import { MessageService } from '../services/message.service';
 import { TypeOfMessage, Command } from '../data/message.data';
 import * as strings from '../messages/strings';
 import { AdminService } from 'src/services/admin.service';
+import { ExtApiService } from 'src/services/extapi.service';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -15,6 +16,7 @@ export class MessageController {
   constructor(
     private readonly messageService: MessageService,
     private readonly adminService: AdminService,
+    private readonly extApiService: ExtApiService,
   ) { }
 
   async handleTestCommand(): Promise<void> {
@@ -67,6 +69,26 @@ export class MessageController {
     }
   }
 
+  async handleYoutube(searchParam: string): Promise<void> {
+    const link = await this.extApiService.getYoutubeLink(searchParam);
+
+    if (!link) {
+      await this.messageService.sendMessage(
+        this.message.chat.id,
+        strings.YT_NOT_FOUND(searchParam),
+        this.message.message_id,
+      );
+
+      return;
+    }
+
+    await this.messageService.sendMessage(
+      this.message.chat.id,
+      strings.YT_FOUND(link),
+      this.message.message_id,
+    );
+  }
+
   @Post()
   async handleMessage(@Req() req, @Res() res): Promise<void> {
     try {
@@ -90,6 +112,37 @@ export class MessageController {
             case Command.CENSOR:
               const duration = this.messageService.getCommandParams(this.message.text);
               await this.handleCensorCommand(duration[0]);
+              break;
+
+            case Command.YOUTUBE_THIS:
+              /*
+                The youtube_this command works by fetching the first youtube result
+                based on a search param.
+
+                This param is either taken from a reply message text or directly from
+                the command param.
+              */
+
+              let param;
+
+              if (this.message.reply_to_message) {
+                param = this.message.reply_to_message.text;
+              } else {
+                param = this.messageService.getCommandFullParam(this.message.text);
+              }
+
+              // If no param was determined.
+              if (!param) {
+                this.messageService.sendMessage(
+                  this.message.chat.id,
+                  strings.YT_NO_QUERY(),
+                  this.message.message_id,
+                );
+
+                break;
+              }
+
+              await this.handleYoutube(param);
               break;
           }
         }
