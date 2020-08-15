@@ -6,9 +6,12 @@ import { MessageController } from './controllers/message.controller';
 import { AdminService } from './services/admin.service';
 import { ExtApiService } from './services/extapi.service';
 import { ExtApiModule } from './extapi.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronService } from './services/cron.service';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true }),
     HttpModule.register({
       baseURL: `https://api.telegram.org/${process.env.TG_API_KEY}`,
@@ -17,6 +20,6 @@ import { ExtApiModule } from './extapi.module';
     ExtApiModule,
   ],
   controllers: [AppController, MessageController],
-  providers: [MessageService, AdminService],
+  providers: [MessageService, AdminService, CronService],
 })
 export class AppModule { }
