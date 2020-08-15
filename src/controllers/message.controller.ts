@@ -56,7 +56,7 @@ export class MessageController {
       await this.messageService.sendMessage(
         this.message.chat.id,
         strings.CENSOR_ERROR(),
-        this.message.id,
+        this.message.message_id,
       );
     } else {
       await this.messageService.sendMessage(
