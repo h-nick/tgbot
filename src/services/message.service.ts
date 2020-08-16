@@ -1,6 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { TypeOfMessage, Command } from '../data/message.data';
 import { SendMessageObj } from '../data/message.data';
+import { ConfigService } from '@nestjs/config';
 
 /*
   Service determines types of messages and commands send.
@@ -10,6 +11,7 @@ import { SendMessageObj } from '../data/message.data';
 export class MessageService {
   constructor(
     private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
   ) { }
 
   getUsernameLink(fromData: any): string {
@@ -61,8 +63,13 @@ export class MessageService {
 
   getCommand(text: string): Command {
     // Extract the actual command from the bot.
+    const botName = this.configService.get<string>('bot.BOT_USERNAME');
 
-    // Regex captures the actual command (between "/" and "@<botname>")
+    if (!text.includes(botName)) {
+      return null;
+    }
+
+    // Regex captures the actual command (between "/" and "@")
     const regex = /\/(.+)@/;
     const command = text.match(regex)[1].toUpperCase();
 

@@ -1,4 +1,5 @@
 import { Injectable, HttpService } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 /*
   Service determines types of messages and commands send.
@@ -8,6 +9,7 @@ import { Injectable, HttpService } from '@nestjs/common';
 export class ExtApiService {
   constructor(
     private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
   ) { }
 
   async getYoutubeLink(searchParam: string): Promise<string> {
@@ -18,7 +20,7 @@ export class ExtApiService {
         `&maxResults=1` +
         `&q=${searchParam}` +
         `&fields=items%2Fid%2FvideoId` +
-        `&key=${process.env.YT_API_KEY}`,
+        `&key=${this.configService.get<string>('api.YT_API_KEY')}`,
       ).toPromise()
     ).data?.items[0]?.id?.videoId;
 

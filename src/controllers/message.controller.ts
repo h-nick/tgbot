@@ -2,8 +2,9 @@ import { Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { MessageService } from '../services/message.service';
 import { TypeOfMessage, Command } from '../data/message.data';
 import * as strings from '../messages/strings';
-import { AdminService } from 'src/services/admin.service';
-import { ExtApiService } from 'src/services/extapi.service';
+import { AdminService } from '../services/admin.service';
+import { ExtApiService } from '../services/extapi.service';
+import { ConfigService } from '@nestjs/config';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -17,6 +18,7 @@ export class MessageController {
     private readonly messageService: MessageService,
     private readonly adminService: AdminService,
     private readonly extApiService: ExtApiService,
+    private readonly configService: ConfigService,
   ) { }
 
   async handleTestCommand(): Promise<void> {
@@ -41,8 +43,12 @@ export class MessageController {
     }
 
     // Ensure duration is not higher than the max vaue.
-    if (duration > Number(process.env.CENSOR_DURATION_MAX_VALUE)) {
-      duration = Number(process.env.CENSOR_DURATION_MAX_VALUE);
+    const maxCensorDurationValue = (
+      this.configService.get<number>('bot.CENSOR_DURATION_MAX_VALUE')
+    );
+
+    if (duration > maxCensorDurationValue) {
+      duration = maxCensorDurationValue;
     }
 
     const resStatus = await this.adminService.censorUser(
@@ -157,14 +163,14 @@ export class MessageController {
         bot group. Since these may contain sensitive information, this is disabled
         for production builds.
       */
-      if (process.env.NODE_ENV === 'development') {
+      if (this.configService.get<string>('runtime.NODE_ENV')) {
         errorMsg = strings.ERROR_STRING(error);
       } else {
         errorMsg = strings.ERROR_STRING();
       }
 
       await this.messageService.sendMessage(
-        Number(process.env.DEFAULT_GROUP_ID),
+        this.configService.get<number>('bot.DEFAULT_GROUP_ID'),
         errorMsg,
       );
     }
