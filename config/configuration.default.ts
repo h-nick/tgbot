@@ -6,6 +6,7 @@ export default () => ({
   api: {
     TG_API_KEY: process.env.TG_API_KEY,
     YT_API_KEY: process.env.YT_API_KET,
+    FIREBASE_URL: process.env.FIREBASE_URL,
   },
   bot: {
     DEFAULT_GROUP_ID: parseInt(process.env.DEFAULT_GROUP_ID, 10),

@@ -12,6 +12,17 @@ export class ExtApiService {
     private readonly configService: ConfigService,
   ) { }
 
+  async getFirebaseData(endPoint: string): Promise<any> {
+    try {
+      const apiUri = this.configService.get<string>('api.FIREBASE_URL');
+      const response = await this.httpService.get(`${apiUri}/${endPoint}.json`);
+
+      return (await response.toPromise()).data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getYoutubeLink(searchParam: string): Promise<string> {
     const videoId = (
       await this.httpService.get(
