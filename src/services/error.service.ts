@@ -12,7 +12,7 @@ import * as strings from '../messages/strings';
 @Injectable()
 export class ErrorService {
   constructor(
-    // private readonly messageService: MessageService,
+    private readonly messageService: MessageService,
     private readonly configService: ConfigService,
   ) { }
 
@@ -34,10 +34,10 @@ export class ErrorService {
         errorMsg = strings.ERROR_STRING();
       }
 
-      /* await this.messageService.sendMessage(
+      await this.messageService.sendMessage(
         this.configService.get<number>('bot.DEFAULT_GROUP_ID'),
         errorMsg,
-      ); */
+      );
     } catch (error) {
       console.log('Something went wrong with the Error Service.');
     }

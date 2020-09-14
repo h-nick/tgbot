@@ -14,7 +14,6 @@ import { ErrorService } from './error.service';
 @Injectable()
 export class CronService {
   constructor(
-    private readonly httpService: HttpService,
     private readonly messageService: MessageService,
     private readonly extApiService: ExtApiService,
     private readonly configService: ConfigService,

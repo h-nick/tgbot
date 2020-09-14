@@ -11,6 +11,7 @@ import { CronService } from './services/cron.service';
 import configuration from '../config/configuration.default';
 import { ErrorService } from './services/error.service';
 import { ErrorModule } from './error.module';
+import { MessagesModule } from './messages.module';
 
 const configObj = {
   isGlobal: true,
@@ -32,8 +33,9 @@ const httpObj = {
     HttpModule.registerAsync(httpObj),
     ExtApiModule,
     ErrorModule,
+    MessagesModule,
   ],
   controllers: [AppController, MessageController],
-  providers: [MessageService, AdminService, CronService],
+  providers: [AdminService, CronService],
 })
 export class AppModule { }
