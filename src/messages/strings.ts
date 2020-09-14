@@ -45,3 +45,11 @@ export const YT_FOUND = (link: string) => (
   'I found the following video: \n'
   + `<b>${link}</b>`
 );
+
+export const DAILY_PAIR = (links: string[], prize: string) => (
+  `<b>A PAIR HAS BEEN CHOSEN FOR THE DAY</b> \n
+  THE WINNERS ARE: \n
+  ${links[0]} + ${links[1]} \n
+  AND THEIR PRIZE IS: ${prize}
+  `
+);

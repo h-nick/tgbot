@@ -8,6 +8,7 @@ export enum Command {
   CENSOR,
   KICK,
   YOUTUBE_THIS,
+  FORCE_DAILYPAIR,
 }
 
 export interface SendMessageObj {

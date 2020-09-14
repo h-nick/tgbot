@@ -5,6 +5,7 @@ import * as strings from '../messages/strings';
 import { AdminService } from '../services/admin.service';
 import { ExtApiService } from '../services/extapi.service';
 import { ConfigService } from '@nestjs/config';
+import { CronService } from './../services/cron.service';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -19,6 +20,7 @@ export class MessageController {
     private readonly adminService: AdminService,
     private readonly extApiService: ExtApiService,
     private readonly configService: ConfigService,
+    private readonly cronService: CronService,
   ) { }
 
   async handleTestCommand(): Promise<void> {
@@ -118,6 +120,10 @@ export class MessageController {
             case Command.CENSOR:
               const duration = this.messageService.getCommandParams(this.message.text);
               await this.handleCensorCommand(duration[0]);
+              break;
+
+            case Command.FORCE_DAILYPAIR:
+              this.cronService.dailyPair();
               break;
 
             case Command.YOUTUBE_THIS:
