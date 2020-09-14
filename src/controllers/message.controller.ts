@@ -6,6 +6,7 @@ import { AdminService } from '../services/admin.service';
 import { ExtApiService } from '../services/extapi.service';
 import { ConfigService } from '@nestjs/config';
 import { CronService } from './../services/cron.service';
+import { ErrorService } from 'src/services/error.service';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -21,6 +22,7 @@ export class MessageController {
     private readonly extApiService: ExtApiService,
     private readonly configService: ConfigService,
     private readonly cronService: CronService,
+    private readonly errorService: ErrorService,
   ) { }
 
   async handleTestCommand(): Promise<void> {
@@ -160,25 +162,7 @@ export class MessageController {
         }
       }
     } catch (error) {
-
-      console.log(error);
-      let errorMsg;
-
-      /*
-        On development builds, the actual exception will be sent as a message to the
-        bot group. Since these may contain sensitive information, this is disabled
-        for production builds.
-      */
-      if (this.configService.get<string>('runtime.NODE_ENV')) {
-        errorMsg = strings.ERROR_STRING(error);
-      } else {
-        errorMsg = strings.ERROR_STRING();
-      }
-
-      await this.messageService.sendMessage(
-        this.configService.get<number>('bot.DEFAULT_GROUP_ID'),
-        errorMsg,
-      );
+      this.errorService.handleError(error);
     }
 
     return res.status(200).send();

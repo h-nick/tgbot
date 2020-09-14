@@ -4,6 +4,7 @@ import { Cron } from '@nestjs/schedule';
 import { ExtApiService } from './extapi.service';
 import { MessageService } from './message.service';
 import * as strings from '../messages/strings';
+import { ErrorService } from './error.service';
 
 /*
   Service handles all methods subjected to a cron job.
@@ -17,6 +18,7 @@ export class CronService {
     private readonly messageService: MessageService,
     private readonly extApiService: ExtApiService,
     private readonly configService: ConfigService,
+    private readonly errorService: ErrorService,
   ) { }
 
   @Cron('0 16 * * *')
@@ -64,24 +66,7 @@ export class CronService {
         strings.DAILY_PAIR(selectedUsersLinks, selectedPrize),
       );
     } catch (error) {
-      console.log(error);
-      let errorMsg;
-
-      /*
-        On development builds, the actual exception will be sent as a message to the
-        bot group. Since these may contain sensitive information, this is disabled
-        for production builds.
-      */
-      if (this.configService.get<string>('runtime.NODE_ENV') === 'development') {
-        errorMsg = strings.ERROR_STRING(error);
-      } else {
-        errorMsg = strings.ERROR_STRING();
-      }
-
-      await this.messageService.sendMessage(
-        this.configService.get<number>('bot.DEFAULT_GROUP_ID'),
-        errorMsg,
-      );
+      this.errorService.handleError(error);
     }
   }
 }

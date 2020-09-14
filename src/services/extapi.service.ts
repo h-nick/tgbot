@@ -1,5 +1,6 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ErrorService } from './error.service';
 
 /*
   Service determines types of messages and commands send.
@@ -10,6 +11,7 @@ export class ExtApiService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    private readonly errorService: ErrorService,
   ) { }
 
   async getFirebaseData(endPoint: string): Promise<any> {
@@ -19,7 +21,7 @@ export class ExtApiService {
 
       return (await response.toPromise()).data;
     } catch (error) {
-      console.log(error);
+      this.errorService.handleError(error);
     }
   }
 
