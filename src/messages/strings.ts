@@ -1,4 +1,12 @@
-export const TEST_STRING = () => '<b>THIS IS A TEST MESSAGE</b>';
+export const TEST_STRING = (botUsername: string, botName: string) => (
+  `
+  <b>${botName} now enabled</b>
+  ${botUsername}
+
+  Version: 2.0
+  Available on GitHub: https://github.com/hniklass/tgbot
+  `
+);
 
 export const ERROR_STRING = (a?: string) => (
   `

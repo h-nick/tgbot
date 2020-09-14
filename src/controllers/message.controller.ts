@@ -26,7 +26,13 @@ export class MessageController {
   ) { }
 
   async handleTestCommand(): Promise<void> {
-    await this.messageService.sendMessage(this.message.chat.id, strings.TEST_STRING());
+    const botName = this.configService.get<string>('bot.BOT_NAME');
+    const botUsername = this.configService.get<string>('bot.BOT_USERNAME');
+
+    await this.messageService.sendMessage(
+      this.message.chat.id,
+      strings.TEST_STRING(botUsername, botName),
+    );
   }
 
   async handleCensorCommand(duration: number = 35): Promise<void> {
