@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TypeOfMessage, Command } from '../data/message.data';
-import { SendMessageObj } from '../data/message.data';
 import { MessageService } from './message.service';
-import * as strings from '../messages/strings';
+import { LocaleService } from 'src/services/locale.service';
 
 /*
   Service handles controller and other services errors thrown inside a try-catch block.
@@ -14,6 +12,7 @@ export class ErrorService {
   constructor(
     private readonly messageService: MessageService,
     private readonly configService: ConfigService,
+    private readonly localeService: LocaleService,
   ) { }
 
   async handleError(errorCatched: string) {
@@ -29,9 +28,9 @@ export class ErrorService {
       let errorMsg;
 
       if (nodeEnv === 'development') {
-        errorMsg = strings.ERROR_STRING(errorCatched);
+        errorMsg = await this.localeService.getErrorString(errorCatched);
       } else {
-        errorMsg = strings.ERROR_STRING();
+        errorMsg = await this.localeService.getErrorString();
       }
 
       await this.messageService.sendMessage(

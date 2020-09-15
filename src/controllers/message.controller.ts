@@ -1,12 +1,12 @@
 import { Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { MessageService } from '../services/message.service';
 import { TypeOfMessage, Command } from '../data/message.data';
-import * as strings from '../messages/strings';
 import { AdminService } from '../services/admin.service';
 import { ExtApiService } from '../services/extapi.service';
 import { ConfigService } from '@nestjs/config';
 import { CronService } from './../services/cron.service';
 import { ErrorService } from 'src/services/error.service';
+import { LocaleService } from 'src/services/locale.service';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -23,6 +23,7 @@ export class MessageController {
     private readonly configService: ConfigService,
     private readonly cronService: CronService,
     private readonly errorService: ErrorService,
+    private readonly localeService: LocaleService,
   ) { }
 
   async handleTestCommand(): Promise<void> {
@@ -31,7 +32,7 @@ export class MessageController {
 
     await this.messageService.sendMessage(
       this.message.chat.id,
-      strings.TEST_STRING(botUsername, botName),
+      await this.localeService.getTestString(botName, botUsername),
     );
   }
 
@@ -40,7 +41,7 @@ export class MessageController {
     if (!this.message.reply_to_message) {
       this.messageService.sendMessage(
         this.message.chat.id,
-        strings.ERROR_NO_REPLY_ID_ON_CENSOR(),
+        await this.localeService.getErrorNoReplyIdOnCensorString(),
         this.message.message_id,
       );
 
@@ -73,13 +74,13 @@ export class MessageController {
     if (!resStatus.data.ok) {
       await this.messageService.sendMessage(
         this.message.chat.id,
-        strings.CENSOR_ERROR(),
+        await this.localeService.getCensorErrorString(),
         this.message.message_id,
       );
     } else {
       await this.messageService.sendMessage(
         this.message.chat.id,
-        strings.CENSOR_MESSAGE(tName, duration),
+        await this.localeService.getCensorString(tName, duration),
         this.message.reply_to_message.message_id,
       );
     }
@@ -91,7 +92,7 @@ export class MessageController {
     if (!link) {
       await this.messageService.sendMessage(
         this.message.chat.id,
-        strings.YT_NOT_FOUND(searchParam),
+        await this.localeService.getYtNotFound(searchParam),
         this.message.message_id,
       );
 
@@ -100,7 +101,7 @@ export class MessageController {
 
     await this.messageService.sendMessage(
       this.message.chat.id,
-      strings.YT_FOUND(link),
+      await this.localeService.getYtFound(link),
       this.message.message_id,
     );
   }
@@ -155,7 +156,7 @@ export class MessageController {
               if (!param) {
                 this.messageService.sendMessage(
                   this.message.chat.id,
-                  strings.YT_NO_QUERY(),
+                  await this.localeService.getYtNoQueryString(),
                   this.message.message_id,
                 );
 

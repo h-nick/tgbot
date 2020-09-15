@@ -1,6 +1,4 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { TypeOfMessage, Command } from '../data/message.data';
-import { SendMessageObj } from '../data/message.data';
 
 /*
   Service includes actions to admin the BOT and the group chat.

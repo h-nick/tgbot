@@ -1,10 +1,10 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 import { ExtApiService } from './extapi.service';
 import { MessageService } from './message.service';
-import * as strings from '../messages/strings';
 import { ErrorService } from './error.service';
+import { LocaleService } from './locale.service';
 
 /*
   Service handles all methods subjected to a cron job.
@@ -18,6 +18,7 @@ export class CronService {
     private readonly extApiService: ExtApiService,
     private readonly configService: ConfigService,
     private readonly errorService: ErrorService,
+    private readonly localeService: LocaleService,
   ) { }
 
   @Cron('0 16 * * *')
@@ -62,7 +63,11 @@ export class CronService {
 
       this.messageService.sendMessage(
         chatId,
-        strings.DAILY_PAIR(selectedUsersLinks, selectedPrize),
+        await this.localeService.getDailyPairString(
+          selectedUsersLinks[0],
+          selectedUsersLinks[1],
+          selectedPrize,
+        ),
       );
     } catch (error) {
       this.errorService.handleError(error);

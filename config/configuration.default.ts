@@ -13,5 +13,6 @@ export default () => ({
     BOT_USERNAME: process.env.BOT_USERNAME,
     BOT_NAME: process.env.BOT_NAME,
     CENSOR_DURATION_MAX_VALUE: 300,
+    BOT_LANG: process.env.BOT_LANG || 'en',
   },
 });
