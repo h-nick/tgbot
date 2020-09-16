@@ -42,11 +42,28 @@ Below is a table containing all environment variables and their default values.
 | --- | ---| --- | --- |
 | PORT | 3000 | No | Defines the port to run the Node instance on. |
 | NODE_ENV | "development" | No | Sets the environment. Any value other than the default will set it to production. |
-| TG_API_KEY | - | Yes | The Telegram API key you got from BotFather |
+| TG_API_KEY | - | **Yes** | The Telegram API key you got from BotFather |
 | YT_API_KEY | - | No | The YouTube API key. Not mandatory, but YouTube search will error if not set. |
 | FIREBASE_URL | - | No | Your Firebase Realtime DB URI. Not mandatory, but required for most trivia functions. |
-| DEFAULT_GROUP_ID | - | Yes | A default group ID to send error messages and log information too. |
-| BOT_USERNAME | - | Yes | The user handle you set for the bot through BotFather. |
-| BOT_NAME | - | Yes | The bot name you set for the through BotFather. |
+| DEFAULT_GROUP_ID | - | **Yes** | A default group ID to send error messages and log information too. |
+| BOT_USERNAME | - | **Yes** | The user handle you set for the bot through BotFather. |
+| BOT_NAME | - | **Yes** | The bot name you set for the through BotFather. |
 | CENSOR_DURATION_MAX_VALUE | 300 | No | The maximum amount of seconds a mute can be set for. |
 | BOT_LANG | "en" | No | The bot language. Must be the same as one of the locale folders. |
+
+## Firebase
+
+To use certain functions of the bot, a Firebase Realtime Database is expected to be setup using the following structure:
+```
+index
+ - prizes
+  - 1: prize1
+  - 2: prize2
+  - 3: prize3
+ - users
+  - name1: {id: "@telegramIdOrHandle" }
+  - name2: {id: "@telegramIdOrHandle" }
+  - name3: {id: "@telegramIdOrHandle" }
+```
+
+However the database is filled is up to you. The bot was designed for a small group with a fixed number of members and, therefore, doesn't register new users in the DB automatically.
