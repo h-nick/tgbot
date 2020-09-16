@@ -5,7 +5,7 @@ export default () => ({
   },
   api: {
     TG_API_KEY: process.env.TG_API_KEY,
-    YT_API_KEY: process.env.YT_API_KET,
+    YT_API_KEY: process.env.YT_API_KEY,
     FIREBASE_URL: process.env.FIREBASE_URL,
   },
   bot: {
