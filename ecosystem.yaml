@@ -1,0 +1,6 @@
+apps:
+  - script: 'npm'
+    name: 'tgbot v2.0.0-alpha.4'
+    cwd: '/srv/www/tgbot'
+    args: 'run start:prod'
+    watch: true
