@@ -35,7 +35,7 @@ You must've set your bot through BotFather first before running the bot.
 
 The bot requires certain environment variables to be set before working. Most of them have default values, however some are mandatory.
 
-Environment variables must be set in an `.env` file at root level.
+Environment variables must be set in an `.env` file at root level. An example file called `env.example` can be found in the same directory. Remember to never commit environtment files.
 
 Below is a table containing all environment variables and their default values.
 | Variable | Default | Mandatory | Description |
@@ -67,3 +67,5 @@ index
 ```
 
 However the database is filled is up to you. The bot was designed for a small group with a fixed number of members and, therefore, doesn't register new users in the DB automatically.
+
+## 
