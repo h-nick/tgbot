@@ -4,9 +4,9 @@ import { TypeOfMessage, Command } from '../data/message.data';
 import { AdminService } from '../services/admin.service';
 import { ExtApiService } from '../services/extapi.service';
 import { ConfigService } from '@nestjs/config';
-import { CronService } from './../services/cron.service';
-import { ErrorService } from 'src/services/error.service';
-import { LocaleService } from 'src/services/locale.service';
+import { CronService } from '../services/cron.service';
+import { ErrorService } from '../services/error.service';
+import { LocaleService } from '../services/locale.service';
 
 /*
   This controller handles all requests to the /new-message endpoint.
