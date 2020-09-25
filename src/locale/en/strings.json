@@ -7,5 +7,5 @@
   "YT_NO_QUERY": "You must use this command responding to another text message or by following it with a search query.",
   "YT_NOT_FOUND": "I couldn't find any YouTube video with this query: {searchParam}",
   "YT_FOUND": "I found the following video:\n{link}",
-  "DAILY_PAIR": "<b>A PAIR HAS BEEN CHOSEN FOR THE DAY</b>\nThe winners are:\n{link1} + {link2}\n\nAnd their prize is: {prize}."
+  "DAILY_PAIR": "<b>A PAIR HAS BEEN CHOSEN FOR THE DAY</b>\nThe winners are:\n{link1} + {link2}\n\nAnd they must give each other: {prize}."
 }

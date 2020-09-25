@@ -7,5 +7,5 @@
   "YT_NO_QUERY": "Debes usar este comando respondiendo a otro mensaje o seguido de tu parámetro de búsqueda.",
   "YT_NOT_FOUND": "No encontré ningún video de YouTube con ese parámetro de búsqueda: {searchParam}",
   "YT_FOUND": "Encontré el siguiente video:\n{link}",
-  "DAILY_PAIR": "<b>LA PAREJA DEL DÍA HA SIDO ESCOGIDA</b>\nLos ganadores son:\n{link1} + {link2}\n\nY su premio es: {prize}."
+  "DAILY_PAIR": "<b>LA PAREJA DEL DÍA HA SIDO ESCOGIDA</b>\nLos ganadores son:\n{link1} + {link2}\n\nY deberán regalarse: {prize}."
 }
