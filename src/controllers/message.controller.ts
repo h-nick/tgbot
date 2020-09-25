@@ -62,27 +62,38 @@ export class MessageController {
       duration = maxCensorDurationValue;
     }
 
-    const resStatus = await this.adminService.censorUser(
-      this.message.chat.id,
-      this.message.reply_to_message.from.id,
-      duration,
-    );
-
     const tName = this.messageService.getUsernameLink(this.message.reply_to_message.from);
+    let resStatus;
 
-    // If censorUser() is successful, it will return true.
-    if (!resStatus.data.ok) {
-      await this.messageService.sendMessage(
+    try {
+      resStatus = await this.adminService.censorUser(
         this.message.chat.id,
-        await this.localeService.getCensorErrorString(),
-        this.message.message_id,
+        this.message.reply_to_message.from.id,
+        duration,
       );
-    } else {
-      await this.messageService.sendMessage(
+    } catch (error) {
+      if (error.response.status === 400) {
+        // User can't be censored
+        await this.messageService.sendMessage(
+          this.message.chat.id,
+          await this.localeService.getCensorErrorString(),
+          this.message.message_id,
+        );
+
+        return;
+      }
+
+      throw new Error('Error @censorUser() <- handleCensorCommand()');
+    }
+
+    if (!resStatus.data.ok) {
+      this.messageService.sendMessage(
         this.message.chat.id,
         await this.localeService.getCensorString(tName, duration),
         this.message.reply_to_message.message_id,
       );
+    } else {
+      throw new Error('Error @handleCensorCommand() -> resStatus');
     }
   }
 
