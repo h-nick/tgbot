@@ -61,7 +61,7 @@ export class CronService {
 
       const selectedPrize = prizes[Object.keys(prizes)[randomValues[2]]];
 
-      this.messageService.sendMessage(
+      const message = await this.messageService.sendMessage(
         chatId,
         await this.localeService.getDailyPairString(
           selectedUsersLinks[0],
@@ -69,6 +69,8 @@ export class CronService {
           selectedPrize,
         ),
       );
+
+      this.messageService.pinMessage(chatId, message.message_id, true);
     } catch (error) {
       this.errorService.handleError(error);
     }
