@@ -19,12 +19,23 @@ export class LocaleService {
     this.lang = this.configService.get<string>('bot.BOT_LANG');
   }
 
-  async getTestString(botName: string, botUsername: string): Promise<string> {
+  async getTestString(
+    botName: string,
+    botUsername: string,
+    version: string,
+    commit: string,
+    hash: string,
+    envVar: string,
+  ): Promise<string> {
     return await this.i18n.translate('strings.TEST', {
       lang: this.lang,
       args: {
         botName,
         botUsername,
+        version,
+        commit,
+        hash,
+        envVar,
       },
     });
   }

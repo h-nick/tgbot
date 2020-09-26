@@ -1,5 +1,5 @@
 {
-  "TEST": "<b>{botName}</b> now enabled!\n{botUsername}\n\nRunning version 2.0\nAvailable on GitHub: https://github.com/hniklass/tgbot",
+  "TEST": "<b>{botName}</b> now enabled!\n{botUsername}\n\nRunning version {version}\n\nLatest commit:\n{commit}\n{hash}\n\nENV_VAR: {envVar}",
   "ERROR": "An error has occurred at server level. Please check the log.\n{error}",
   "ERROR_NO_REPLY_ID_ON_CENSOR": "You can only use the censor command when replying to a message.",
   "CENSOR": "{username} was censored for this post.\nDuration: {duration} seconds.",

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MessageService } from './message.service';
-import { LocaleService } from 'src/services/locale.service';
+import { LocaleService } from './locale.service';
 
 /*
   Service handles controller and other services errors thrown inside a try-catch block.
