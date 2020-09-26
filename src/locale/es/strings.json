@@ -1,5 +1,5 @@
 {
-  "TEST": "<b>{botName}</b> activo!\n{botUsername}\n\nVersión 2.0\nDisponible en GitHub: https://github.com/hniklass/tgbot",
+  "TEST": "<b>{botName}</b> activo!\n{botUsername}\n\nVersión {version}\n\nÚltimo mensaje de consolidación:\n{commit}\n<[hash]>",
   "ERROR": "Un error ha ocurrido a nivel del servidor. Por favor revisar el log.\n{error}",
   "ERROR_NO_REPLY_ID_ON_CENSOR": "Solo puedes usar este comando mientras respondes a un mensaje.",
   "CENSOR": "{username} ha sido censurado por este mensaje.\nDuración: {duration} segundos.",

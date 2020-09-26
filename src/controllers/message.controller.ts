@@ -4,9 +4,11 @@ import { TypeOfMessage, Command } from '../data/message.data';
 import { AdminService } from '../services/admin.service';
 import { ExtApiService } from '../services/extapi.service';
 import { ConfigService } from '@nestjs/config';
-import { CronService } from './../services/cron.service';
-import { ErrorService } from 'src/services/error.service';
-import { LocaleService } from 'src/services/locale.service';
+import { CronService } from '../services/cron.service';
+import { ErrorService } from '../services/error.service';
+import { LocaleService } from '../services/locale.service';
+import { version } from '../../package.json';
+import { execSync } from 'child_process';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -29,10 +31,18 @@ export class MessageController {
   async handleTestCommand(): Promise<void> {
     const botName = this.configService.get<string>('bot.BOT_NAME');
     const botUsername = this.configService.get<string>('bot.BOT_USERNAME');
+    const commit = execSync('git log -1 --pretty=%B').toString().trim();
+    const hash = execSync('git rev-parse HEAD').toString().trim();
 
     await this.messageService.sendMessage(
       this.message.chat.id,
-      await this.localeService.getTestString(botName, botUsername),
+      await this.localeService.getTestString(
+        botName,
+        botUsername,
+        version,
+        commit,
+        hash,
+      ),
     );
   }
 
@@ -62,27 +72,38 @@ export class MessageController {
       duration = maxCensorDurationValue;
     }
 
-    const resStatus = await this.adminService.censorUser(
-      this.message.chat.id,
-      this.message.reply_to_message.from.id,
-      duration,
-    );
-
     const tName = this.messageService.getUsernameLink(this.message.reply_to_message.from);
+    let resStatus;
 
-    // If censorUser() is successful, it will return true.
-    if (!resStatus.data.ok) {
-      await this.messageService.sendMessage(
+    try {
+      resStatus = await this.adminService.censorUser(
         this.message.chat.id,
-        await this.localeService.getCensorErrorString(),
-        this.message.message_id,
+        this.message.reply_to_message.from.id,
+        duration,
       );
-    } else {
-      await this.messageService.sendMessage(
+    } catch (error) {
+      if (error.response.status === 400) {
+        // User can't be censored
+        await this.messageService.sendMessage(
+          this.message.chat.id,
+          await this.localeService.getCensorErrorString(),
+          this.message.message_id,
+        );
+
+        return;
+      }
+
+      throw new Error('Error @censorUser() <- handleCensorCommand()');
+    }
+
+    if (!resStatus.data.ok) {
+      this.messageService.sendMessage(
         this.message.chat.id,
         await this.localeService.getCensorString(tName, duration),
         this.message.reply_to_message.message_id,
       );
+    } else {
+      throw new Error('Error @handleCensorCommand() -> resStatus');
     }
   }
 
