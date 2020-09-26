@@ -7,6 +7,8 @@ import { ConfigService } from '@nestjs/config';
 import { CronService } from '../services/cron.service';
 import { ErrorService } from '../services/error.service';
 import { LocaleService } from '../services/locale.service';
+import { version } from '../../package.json';
+import { execSync } from 'child_process';
 
 /*
   This controller handles all requests to the /new-message endpoint.
@@ -29,10 +31,18 @@ export class MessageController {
   async handleTestCommand(): Promise<void> {
     const botName = this.configService.get<string>('bot.BOT_NAME');
     const botUsername = this.configService.get<string>('bot.BOT_USERNAME');
+    const commit = execSync('git log -1 --pretty=%B').toString().trim();
+    const hash = execSync('git rev-parse HEAD').toString().trim();
 
     await this.messageService.sendMessage(
       this.message.chat.id,
-      await this.localeService.getTestString(botName, botUsername),
+      await this.localeService.getTestString(
+        botName,
+        botUsername,
+        version,
+        commit,
+        hash,
+      ),
     );
   }
 
