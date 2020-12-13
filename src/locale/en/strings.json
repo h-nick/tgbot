@@ -3,7 +3,7 @@
   "ERROR": "An error has occurred at server level. Please check the log.\n{error}",
   "ERROR_NO_REPLY_ID_ON_CENSOR": "You can only use the censor command when replying to a message.",
   "CENSOR": "{username} was censored for this post.\nDuration: {duration} seconds.",
-  "CENSOR_ERROR": "Oops! Something went wrong. Maybe the user is a channel administrator.",
+  "CENSOR_ERROR": "Oops! Something went wrong. Maybe the user is a channel administrator or the bot doesn't have enough permissions.",
   "YT_NO_QUERY": "You must use this command responding to another text message or by following it with a search query.",
   "YT_NOT_FOUND": "I couldn't find any YouTube video with this query: {searchParam}",
   "YT_FOUND": "I found the following video:\n{link}",

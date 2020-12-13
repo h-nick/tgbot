@@ -3,7 +3,7 @@
   "ERROR": "Un error ha ocurrido a nivel del servidor. Por favor revisar el log.\n{error}",
   "ERROR_NO_REPLY_ID_ON_CENSOR": "Solo puedes usar este comando mientras respondes a un mensaje.",
   "CENSOR": "{username} ha sido censurado por este mensaje.\nDuración: {duration} segundos.",
-  "CENSOR_ERROR": "Oops! Algo salió mal. Quizás el usuario es administrador del canal.",
+  "CENSOR_ERROR": "Oops! Algo salió mal. Quizás el usuario es administrador del canal o el bot no tiene permisos.",
   "YT_NO_QUERY": "Debes usar este comando respondiendo a otro mensaje o seguido de tu parámetro de búsqueda.",
   "YT_NOT_FOUND": "No encontré ningún video de YouTube con ese parámetro de búsqueda: {searchParam}",
   "YT_FOUND": "Encontré el siguiente video:\n{link}",
