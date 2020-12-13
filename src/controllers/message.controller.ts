@@ -95,10 +95,10 @@ export class MessageController {
         return;
       }
 
-      throw new Error('Error @censorUser() <- handleCensorCommand()');
+      throw new Error('Error @censorUser() -> handleCensorCommand()');
     }
 
-    if (!resStatus.data.ok) {
+    if (resStatus.data.ok) {
       this.messageService.sendMessage(
         this.message.chat.id,
         await this.localeService.getCensorString(tName, duration),
@@ -150,8 +150,8 @@ export class MessageController {
               break;
 
             case Command.CENSOR:
-              const duration = this.messageService.getCommandParams(this.message.text);
-              await this.handleCensorCommand(duration[0]);
+              const duration = this.messageService.getCommandParams(this.message.text)[0];
+              await this.handleCensorCommand(duration);
               break;
 
             case Command.FORCE_DAILYPAIR:
