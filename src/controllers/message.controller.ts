@@ -1,4 +1,4 @@
-import { Controller, Post, Req, Res, Get } from '@nestjs/common';
+import { Controller, Post, Req, Res, CACHE_MANAGER, Inject } from '@nestjs/common';
 import { MessageService } from '../services/message.service';
 import { TypeOfMessage, Command } from '../data/message.data';
 import { AdminService } from '../services/admin.service';

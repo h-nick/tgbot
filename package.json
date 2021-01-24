@@ -25,6 +25,8 @@
     "@nestjs/core": "^6.7.2",
     "@nestjs/platform-express": "^6.7.2",
     "@nestjs/schedule": "^0.4.0",
+    "cache-manager": "^3.4.0",
+    "cache-manager-redis-store": "^2.0.0",
     "nestjs-i18n": "^8.0.9",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
